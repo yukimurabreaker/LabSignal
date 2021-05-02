@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 
+
 	int numPrime(int no){
 		 int i,cnt = 0;
 	for(i = 2; i <= no/2; i++)
@@ -16,10 +17,20 @@
 	}
 		return cnt;
 }
+	 void sigint_handler(int sig);
+ 	 char s[200];
+  
+
 	int main(){
 	int i, no, cnt = 0;
 	int buffer;
 	int fd[2];
+	
+	  if (signal(SIGINT, sigint_handler) == SIG_ERR){
+    	 perror("signal");
+   	  exit(1);
+ 	 }
+
 	if(pipe(fd) == -1){
 		printf("Error");
 		return 1;
@@ -52,4 +63,10 @@
 
 	return 0;
 }
+
+	void sigint_handler(int sig)
+	{
+ 	 printf("Sila tulis balik! \n");
+	}
+
 
